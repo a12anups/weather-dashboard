@@ -18,12 +18,12 @@ def get_current_weather(city):
     response = requests.get(f"{BASE_URL}/current", params=params)
     return response.json()
 
-# Fetch Historical Weather Data for Last 10 Days
+# Fetch Historical Weather Data for Last 6 Days
 def get_historical_weather(city):
     historical_data = {}
     today = datetime.date.today()
 
-    for i in range(1, 11):  # Last 10 days
+    for i in range(1, 7):  # Last 6 days
         date = today - datetime.timedelta(days=i)
         params = {"access_key": API_KEY, "query": city, "historical_date": date.strftime("%Y-%m-%d")}
         response = requests.get(f"{BASE_URL}/historical", params=params)
@@ -51,7 +51,7 @@ if st.button("Get Weather"):
         st.error("Error fetching current weather data. Please check the city name.")
 
     # Fetch and Display Historical Weather Data
-    st.subheader(f"📅 Historical Weather (Last 10 Days) for {city}")
+    st.subheader(f"📅 Historical Weather (Last 6 Days) for {city}")
     historical_data = get_historical_weather(city)
 
     if historical_data:
